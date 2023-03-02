@@ -2,7 +2,7 @@ from math import factorial as fat
 
 
 # coeficientes k pré-calculados
-k = [-1 / fat(3), 1 / fat(5), -1 / fat(7), 1 / fat(9), -1 / fat(11)]
+k = [-0.16666666666666666, 0.008333333333333333, -0.0001984126984126984, 2.7557319223985893e-06, -2.505210838544172e-08]
 
 
 def taylor(x):

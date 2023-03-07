@@ -2,6 +2,7 @@ from math import factorial as fat
 from math import pi
 from math import sin
 from time import time
+import matplotlib.pyplot as plt
 
 
 # coeficientes k pré-calculados
@@ -17,9 +18,7 @@ def taylor(x):
 
     t1 = time()
 
-    print(f"tempo taylor: {t1 - t0} s")
-
-    return seno
+    return (seno, t1 - t0)
 
 
 def pade(x):
@@ -29,13 +28,56 @@ def pade(x):
 
     t1 = time()
 
-    print(f"tempo pade: {t1 - t0} ")
+    return (seno, t1 - t0)
 
-    return seno
+
+def grafico_tempo(dados):
+    fig, ax = plt.subplots()
+
+    ax.set_xlabel("x")
+    ax.set_ylabel("tempo (s)")
+
+    ax.plot(dados["x"], dados["taylor"]["t"], 'b', label="taylor")
+    ax.plot(dados["x"], dados["pade"]["t"], 'r', label="pade")
+
+    ax.legend()
+
+    fig.savefig('tempo.png')
+
+
+def grafico_erro(dados):
+    fig, ax = plt.subplots()
+
+    ax.set_xlabel("x")
+    ax.set_ylabel("erro")
+
+    plt.yscale('symlog', linthresh=10e-18)
+
+    ax.plot(dados["x"], dados["taylor"]["e"], 'b', label="taylor")
+    ax.plot(dados["x"], dados["pade"]["e"], 'r', label="pade")
+
+    ax.legend()
+
+    fig.savefig('erro.png')
+
+
+dados = {"x": [], "taylor": {"t": [], "e": []}, "pade": {"t": [], "e": []}}
 
 x = -pi/4
 while x <= pi/4:
-    # print(f"pade = {pade(x)}, taylor = {taylor(x)}, real = {sin(x)}")
-    print(f"sin({x}): taylor errou por {sin(x) - taylor(x)}, pade por {pade(x) - sin(x)}")
+    pade_res = pade(x)
+    taylor_res = taylor(x)
+    real = sin(x)
+
+    dados["x"].append(x)
+
+    dados["pade"]["e"].append(abs(real - pade_res[0]))
+    dados["taylor"]["e"].append(abs(real - taylor_res[0]))
+
+    dados["taylor"]["t"].append(taylor_res[1])
+    dados["pade"]["t"].append(pade_res[1])
 
     x += 0.1
+
+grafico_tempo(dados)
+grafico_erro(dados)

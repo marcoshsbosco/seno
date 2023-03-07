@@ -15,20 +15,6 @@ def taylor(x):
 
     t0 = time()
 
-    seno = x * (1 + x**2 * (k[0] + x**2 * (k[1] + x **
-                2 * (k[2] + x**2 * (k[3] + k[4] * x**2)))))
-
-    t1 = time()
-
-    return (seno, t1 - t0)
-
-
-def taylor_reduzido(x):
-    global k
-
-    t0 = time()
-
-    # acho que não tem como diminuir mais doq isso
     x2 = x**2
     seno = x * (1 + x2 * (k[0] + x2 * (k[1] +
                 x2 * (k[2] + x2 * (k[3] + k[4] * x2)))))
@@ -125,14 +111,7 @@ while x <= pi/4:
     taylor_res = taylor(x)
 
     pade_res_t = pade_reduzido(x)
-    taylor_res_t = taylor_reduzido(x)
 
-    # print(
-    #     f'Pade: normal: {pade_res[0]} reduzido {pade_res_t[0]} diferença: {pade_res_t[0]-pade_res[0]}')
-    # print(f'{sin(x) - pade_res[0]} ... {sin(x) - pade_res_t[0]}')
-    # print(abs(sin(x) - pade_res[0]) > abs(sin(x) - pade_res_t[0]))
-    # print(
-    #     f'Taylor: normal: {taylor_res[0]} reduzido {taylor_res_t[0]} diferença: {taylor_res_t[0]-taylor_res[0]} ')
     real = sin(x)
 
     dados["x"].append(x)

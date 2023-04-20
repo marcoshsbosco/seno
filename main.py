@@ -34,10 +34,11 @@ def pade(x):
 
     x2 = x ** 2
     x3 = x * x2
+    x4 = x2 * x2
     x5 = x3 * x2
     x7 = x5 * x2
 
-    seno = (x + ((um_setentadois_avos + k[0]) * x3) + ((um_setentadois_avos * k[0]) * x5) + (um_setentadois_avos * k[1]) + (k[2] * x7)) / (1 + um_setentadois_avos * x2)
+    seno = (x - (241 / 1650)*x3 + (601/118800)*x5 - (121/2268000)*x7) / (1 + (17 / 825)*x2 + (19/118800)*x4)
 
     t1 = time()
 
@@ -64,7 +65,7 @@ def grafico_erro(dados):
     ax.set_xlabel("x")
     ax.set_ylabel("erro")
 
-    plt.yscale('symlog', linthresh=10e-18)
+    # plt.yscale('symlog', linthresh=10e-18)
 
     ax.plot(dados["x"], dados["taylor"]["e"], 'b', label="taylor")
     ax.plot(dados["x"], dados["pade"]["e"], 'r', label="pade")
